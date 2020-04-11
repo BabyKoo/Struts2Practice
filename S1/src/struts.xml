@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+"http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<package name="default" namespace="/" extends="struts-default">
+		<interceptors>
+			<interceptor name="loginItp"
+				class="com.s1.interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="default-stack">
+				<!-- <interceptor-ref name="token"></interceptor-ref> -->
+				<!-- <interceptor-ref name="timer"></interceptor-ref> -->
+				<interceptor-ref name="loginItp"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+                <!-- 重点！ defaultstack 作为默认拦截器会将参数注入-->
+			</interceptor-stack>
+		</interceptors>
+<!-- 		<default-interceptor-ref name="default-stack"></default-interceptor-ref> -->
+		<action name="user_*" class="com.s1.action.UserAction"
+			method="{1}">
+			<result type="redirect" name="signupSuccess">
+				<param name="location">/showInfo.jsp</param>
+				<param name="name">${name}</param>
+				<param name="psd">${psd}</param>
+			</result>
+			<result type="redirect" name="signinSuccess">
+				<param name="location">/showInfo.jsp</param>
+				<param name="name">${name}</param>
+				<param name="psd">${psd}</param>
+			</result>
+			<result type="dispatcher" name="input">/signup.jsp</result>
+			<result type="dispatcher" name="login">/signin.jsp</result>
+			<interceptor-ref name="default-stack"></interceptor-ref>
+			<allowed-methods>signup, signin</allowed-methods>
+			<!-- 重点！Struts2.5使用通配符调用方法时，内部会验证是否允许访问该方法 -->
+		</action>
+	</package>
+</struts>
