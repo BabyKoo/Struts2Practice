@@ -9,6 +9,9 @@
 </head>
 <body onload="siteInit()">
 <s:fielderror></s:fielderror>
+	<div class="error">
+		<s:property value="#session.errorMsg" />
+	</div>
 	<%@ include file="/site-header.jsp"%>
 	<div class="ms-Dialog" style="display: block;">
 		<div class="ms-Dialog--lgHeader"></div>
