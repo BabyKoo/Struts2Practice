@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+"-//Apache Struts//XWork Validator 1.0.3//EN"
+"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<field name="user.name">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>用户名不能为空</message>
+		</field-validator>
+		<field-validator type="stringlength">
+		<param name="maxLength">10</param>
+		<param name="minLength">6</param>
+		<message>用户名长度须在${minLength}和${maxLength}之间</message>
+		</field-validator>
+	</field>
+	<field name="user.psd">
+	<field-validator type="requiredstring">
+	<message>密码不能为空</message>
+	</field-validator>
+	<field-validator type="stringlength">
+	<param name="minLength">6</param>
+	<message>密码长度必须大于等于 ${minLength}</message>
+	</field-validator>
+	</field>
+	<!-- <field name="user.birthDate"> -->
+	<!-- <field-validator type="regex"> -->
+	<!-- <param name="expression">^(\d{4}-\d{1,2}-\d{1,2})$</param> -->
+	<!-- <message>生日格式不正确，格式为yyyy-MM-DD</message> -->
+	<!-- </field-validator> -->
+	<!-- </field> -->
+	<!-- <field name="user.email"> -->
+	<!-- <field-validator type="regex"> -->
+	<!-- <param name="expression">^(.+@.+)$</param> -->
+	<!-- <message>邮箱格式不正确，格式为hello@gmail.com</message> -->
+	<!-- </field-validator> -->
+	<!-- </field> -->
+</validators>

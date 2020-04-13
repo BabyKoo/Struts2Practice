@@ -1,7 +1,7 @@
 <%@page import="com.opensymphony.xwork2.util.finder.ClassFinder.Info"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info="注册"%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,33 +13,35 @@
 	<%@ include file="/site-header.jsp"%>
 	<div class="ms-Dialo" id="main-block">
 		<s:form action="/user_signup.action" method="get">
+			<s:fielderror><s:param>user.name</s:param></s:fielderror>
 			<div class="ms-TextField" onload="TextField()">
 				<label class="ms-Label">用户名</label> <input
 					class="ms-TextField-field" type="text" value="" placeholder=""
-					name="name">
+					name="user.name">
 			</div>
+			<s:fielderror><s:param>user.psd</s:param></s:fielderror>
 			<div class="ms-TextField" onload="TextField()">
 				<label class="ms-Label">密码</label> <input class="ms-TextField-field"
-					type="password" value="" placeholder="" name="psd">
+					type="password" value="" placeholder="" name="user.psd">
 			</div>
 			<div class="ms-Dropdown" tabindex="0">
 				<label class="ms-Label">性别</label> <i
 					class="ms-Dropdown-caretDown ms-Icon ms-Icon--ChevronDown"></i> <select
-					class="ms-Dropdown-select" name="gender">
+					class="ms-Dropdown-select" name="user.gender">
 					<option value="male">男</option>
 					<option value="female">女</option>
 				</select>
 			</div>
 			<div class="ms-TextField" onload="TextField()">
 				<label class="ms-Label">邮箱</label> <input class="ms-TextField-field"
-					type="email" value="" placeholder="" name="email">
+					type="email" value="" placeholder="" name="user.email">
 			</div>
 			<div class="ms-DatePicker">
 				<div class="ms-TextField">
 					<label class="ms-Label">生日</label> <i
 						class="ms-DatePicker-event ms-Icon ms-Icon--Event"></i> <input
 						class="ms-TextField-field" type="text" placeholder="选择日期&hellip;"
-						name="birthDate">
+						name="user.birthDate">
 				</div>
 				<div class="ms-DatePicker-monthComponents">
 					<span class="ms-DatePicker-nextMonth js-nextMonth"><i
@@ -91,8 +93,8 @@
 			</div>
 
 			<input class="ms-Button ms-Button--primary" type="submit" value="确认"
-				name="submit"> <input class="ms-Button" type="reset"
-				value="重新填写" name="reset">
+				name="submit">
+			<input class="ms-Button" type="reset" value="重新填写" name="reset">
 		</s:form>
 	</div>
 

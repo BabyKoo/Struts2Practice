@@ -8,6 +8,7 @@
 <%@ include file="/site-head.jsp"%>
 </head>
 <body onload="siteInit()">
+<s:fielderror></s:fielderror>
 	<%@ include file="/site-header.jsp"%>
 	<div class="ms-Dialog" style="display: block;">
 		<div class="ms-Dialog--lgHeader"></div>

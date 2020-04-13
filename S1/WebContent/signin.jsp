@@ -9,23 +9,27 @@
 <%@ include file="/site-head.jsp"%>
 </head>
 <body onload="siteInit()">
-<%@ include file="/site-header.jsp"%>
-<div class="ms-Dialo" id="main-block">
-        <s:form action="/user_signin.action" method="get">
-            <div class="error"><s:property value="#session.errorMsg"/></div>
-            <div class="ms-TextField" onload="TextField()">
-                <label class="ms-Label">用户名</label> <input
-                    class="ms-TextField-field" type="text" value="" placeholder=""
-                    name="name">
-            </div>
-            <div class="ms-TextField" onload="TextField()">
-                <label class="ms-Label">密码</label> <input class="ms-TextField-field"
-                    type="password" value="" placeholder="" name="psd">
-            </div>
-            <input class="ms-Button ms-Button--primary" type="submit" value="确认"
-                name="submit"> <input class="ms-Button" type="reset"
-                value="重新填写" name="reset">
-        </s:form>
-    </div>
+	<%@ include file="/site-header.jsp"%>
+	<div class="ms-Dialo" id="main-block">
+		<s:form action="/user_signin.action" method="get">
+			<div class="error">
+				<s:property value="#session.errorMsg" />
+			</div>
+			<s:fielderror><s:param>user.name</s:param></s:fielderror>
+			<div class="ms-TextField" onload="TextField()">
+				<label class="ms-Label">用户名</label> <input
+					class="ms-TextField-field" type="text" value="" placeholder=""
+					name="user.name">
+			</div>
+			<s:fielderror><s:param>user.psd</s:param></s:fielderror>
+			<div class="ms-TextField" onload="TextField()">
+				<label class="ms-Label">密码</label> <input class="ms-TextField-field"
+					type="password" value="" placeholder="" name="user.psd">
+			</div>
+			<input class="ms-Button ms-Button--primary" type="submit" value="确认"
+				name="submit">
+			<input class="ms-Button" type="reset" value="重新填写" name="reset">
+		</s:form>
+	</div>
 </body>
 </html>

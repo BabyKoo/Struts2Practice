@@ -7,10 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConnectionManager {
-	private static final String DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-	private static final String DATABASE_URL = "jdbc:sqlserver://localhost:1434;DatabaseName=s1";
-	private static final String DATABASE_USRE = "hugo";
-	private static final String DATABASE_PASSWORD = "1111";
+	private static final String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
+	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/Struts2Test?useSSL=false&serverTimezone=CST";
+	private static final String DATABASE_USRE = "victor";
+	private static final String DATABASE_PASSWORD = "yu1002";
 	/**
 	 * 返回连接 
 	 */

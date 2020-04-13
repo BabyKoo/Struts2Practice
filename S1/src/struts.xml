@@ -25,8 +25,8 @@
 			</result>
 			<result type="redirect" name="signinSuccess">
 				<param name="location">/showInfo.jsp</param>
-				<param name="name">${name}</param>
-				<param name="psd">${psd}</param>
+				<param name="name">${user.name}</param>
+				<param name="psd">${user.psd}</param>
 			</result>
 			<result type="dispatcher" name="input">/signup.jsp</result>
 			<result type="dispatcher" name="login">/signin.jsp</result>
