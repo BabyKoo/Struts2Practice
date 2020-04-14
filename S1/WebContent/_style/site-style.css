@@ -34,6 +34,9 @@ a{
 #index-body{
     background-image: url(/S1/th.jfif);
 }
-.error, s:fielderror{
+.error{
 	color: #c00;
+}
+s:fielderror{
+    color: #c00;
 }

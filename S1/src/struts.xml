@@ -12,10 +12,10 @@
 				<!-- <interceptor-ref name="timer"></interceptor-ref> -->
 				<interceptor-ref name="loginItp"></interceptor-ref>
 				<interceptor-ref name="defaultStack"></interceptor-ref>
-                <!-- 重点！ defaultstack 作为默认拦截器会将参数注入-->
+				<!-- 重点！ defaultstack 作为默认拦截器会将参数注入 -->
 			</interceptor-stack>
 		</interceptors>
-<!-- 		<default-interceptor-ref name="default-stack"></default-interceptor-ref> -->
+		<default-interceptor-ref name="default-stack"></default-interceptor-ref>
 		<action name="user_*" class="com.s1.action.UserAction"
 			method="{1}">
 			<result type="redirect" name="signupSuccess">
@@ -24,15 +24,47 @@
 				<param name="psd">${user.psd}</param>
 			</result>
 			<result type="redirect" name="signinSuccess">
-				<param name="location">/showInfo.jsp</param>
+				<param name="location">/studentsManagement/studentsManagement.jsp</param>
 				<param name="name">${user.name}</param>
 				<param name="psd">${user.psd}</param>
 			</result>
+			<result type="redirect" name="signoutSuccess">
+				<param name="location">/index.jsp</param>
+				<param name="name">${user.name}</param>
+			</result>
 			<result type="dispatcher" name="input">/signup.jsp</result>
 			<result type="dispatcher" name="login">/signin.jsp</result>
-			<interceptor-ref name="default-stack"></interceptor-ref>
-			<allowed-methods>signup, signin</allowed-methods>
+			<!-- <interceptor-ref name="default-stack"></interceptor-ref> -->
+			<allowed-methods>signup, signin, signout</allowed-methods>
 			<!-- 重点！Struts2.5使用通配符调用方法时，内部会验证是否允许访问该方法 -->
+		</action>
+	</package>
+	<package name="stuMan" namespace="/studentsManagement"
+		extends="struts-default">
+		<interceptors>
+			<interceptor name="loginItp"
+				class="com.s1.interceptor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="default-stack">
+				<interceptor-ref name="loginItp"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+				<!-- 重点！ defaultStack 作为默认拦截器会将参数注入 -->
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="default-stack"></default-interceptor-ref>
+		<action name="query_*" class="com.s1.action.QueryStudents"
+			method="{1}">
+			<result type="redirect" name="querySuccess">
+				<param name="location">./queryResult.jsp</param>
+				<!-- <param name="student">${student}</param> -->
+			</result>
+			<result type="redirect" name="queryFail">
+				<param name="location">./queryStudent.jsp</param>
+				<param name="Type">"fail"</param>
+			</result>
+			<result type="redirect" name="login">
+				<param name="location">/signin.jsp</param>
+			</result>
+			<allowed-methods>byName, byNo, byDpart, all, insert, update, delete</allowed-methods>
 		</action>
 	</package>
 </struts>

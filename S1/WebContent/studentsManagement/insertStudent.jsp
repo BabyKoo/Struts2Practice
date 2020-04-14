@@ -1,6 +1,5 @@
-<%@page import="com.opensymphony.xwork2.util.finder.ClassFinder.Info"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" info="注册"%>
+	pageEncoding="UTF-8" info="新增学生"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
@@ -11,36 +10,44 @@
 <body onload="siteInit()">
 	<%@ include file="/site-header.jsp"%>
 	<div class="ms-Dialo" id="main-block">
-		<s:form action="/user_signup.action" method="get">
-			<s:fielderror><s:param>user.name</s:param></s:fielderror>
-			<div class="ms-TextField" onload="TextField()">
-				<label class="ms-Label">用户名</label> <input
-					class="ms-TextField-field" type="text" value="" placeholder=""
-					name="user.name">
+		<s:form action="/studentsManagement/query_insert.action" method="get">
+			<div class="error">
+				<s:property value="#session.errorMsg" />
 			</div>
-			<s:fielderror><s:param>user.psd</s:param></s:fielderror>
 			<div class="ms-TextField" onload="TextField()">
-				<label class="ms-Label">密码</label> <input class="ms-TextField-field"
-					type="password" value="" placeholder="" name="user.psd">
+				<label class="ms-Label">姓名*</label> <input class="ms-TextField-field"
+					type="text" value="" placeholder="" name="student.stuName">
 			</div>
 			<div class="ms-Dropdown" tabindex="0">
 				<label class="ms-Label">性别</label> <i
 					class="ms-Dropdown-caretDown ms-Icon ms-Icon--ChevronDown"></i> <select
-					class="ms-Dropdown-select" name="user.gender">
+					class="ms-Dropdown-select" name="student.stuGender">
 					<option value="male">男</option>
 					<option value="female">女</option>
+					<option value="other">其他</option>
 				</select>
 			</div>
 			<div class="ms-TextField" onload="TextField()">
-				<label class="ms-Label">邮箱</label> <input class="ms-TextField-field"
-					type="email" value="" placeholder="" name="user.email">
+				<label class="ms-Label">学号*</label> <input
+					class="ms-TextField-field" type="text" value="" placeholder=""
+					name="student.stuNo">
 			</div>
+			<div class="ms-TextField" onload="TextField()">
+				<label class="ms-Label">院系</label> <input
+					class="ms-TextField-field" type="text" value="" placeholder=""
+					name="student.dpart">
+			</div>
+			<div class="ms-TextField" onload="TextField()">
+                <label class="ms-Label">班级</label> <input
+                    class="ms-TextField-field" type="text" value="" placeholder=""
+                    name="student.stuClass">
+            </div>
 			<div class="ms-DatePicker">
 				<div class="ms-TextField">
-					<label class="ms-Label">生日</label> <i
+					<label class="ms-Label">入学日期</label> <i
 						class="ms-DatePicker-event ms-Icon ms-Icon--Event"></i> <input
 						class="ms-TextField-field" type="text" placeholder="选择日期&hellip;"
-						name="user.birthDate">
+						name="student.admissionDate">
 				</div>
 				<div class="ms-DatePicker-monthComponents">
 					<span class="ms-DatePicker-nextMonth js-nextMonth"><i
@@ -90,12 +97,15 @@
 					</div>
 				</div>
 			</div>
-
+			<div class="ms-TextField" onload="TextField()">
+				<label class="ms-Label">GPA</label> <input
+					class="ms-TextField-field" type="text" value="" placeholder=""
+					name="student.gpa">
+			</div>
 			<input class="ms-Button ms-Button--primary" type="submit" value="确认"
 				name="submit">
 			<input class="ms-Button" type="reset" value="重新填写" name="reset">
 		</s:form>
 	</div>
-
 </body>
 </html>

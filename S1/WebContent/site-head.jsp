@@ -17,5 +17,5 @@
 <title>
     <%
         out.print(getServletInfo()+"&nbsp;-&nbsp;");
-    %>Struts2 实验一
+    %>Struts2 实验
 </title>

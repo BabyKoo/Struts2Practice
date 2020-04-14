@@ -62,5 +62,5 @@ public class ConnectionManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}	
+	}
 }

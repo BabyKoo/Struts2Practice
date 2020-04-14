@@ -68,7 +68,7 @@ public class UserDao {
 		}
 	}
 	
-	public int insertUser(User user) {
+	public User insertUser(User user) {
 		Connection dbConnection = null;
 		PreparedStatement pStatement = null;
 		ResultSet res = null;
@@ -87,11 +87,12 @@ public class UserDao {
 			int userId = 0;
 			if (res.next()) {
 				userId = res.getInt(1);
+				user.setId(userId);
 			}
-			return userId;
+			return user;
 		} catch (SQLException sqlE) {
 			sqlE.printStackTrace();
-			return -1;
+			return null;
 		} finally {
 			ConnectionManager.closeStatement(pStatement);
 			ConnectionManager.closeConnection(dbConnection);

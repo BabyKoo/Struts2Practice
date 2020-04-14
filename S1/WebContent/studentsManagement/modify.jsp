@@ -1,6 +1,7 @@
-<%@page import="com.opensymphony.xwork2.util.finder.ClassFinder.Info"%>
+<%@page import="com.s1.dao.*"%>
+<%@page import="com.s1.entity.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" info="注册"%>
+	pageEncoding="UTF-8" info="修改"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <!DOCTYPE html>
 <html>
@@ -10,37 +11,61 @@
 </head>
 <body onload="siteInit()">
 	<%@ include file="/site-header.jsp"%>
+	<%
+		int id = Integer.parseInt(request.getParameter("stuId"));
+		StudentDao sd = new StudentDao();
+		Student stu = sd.getStudentById(id);
+	%>
 	<div class="ms-Dialo" id="main-block">
-		<s:form action="/user_signup.action" method="get">
-			<s:fielderror><s:param>user.name</s:param></s:fielderror>
-			<div class="ms-TextField" onload="TextField()">
-				<label class="ms-Label">用户名</label> <input
-					class="ms-TextField-field" type="text" value="" placeholder=""
-					name="user.name">
+		<s:form action="/studentsManagement/query_update.action" method="get">
+			<div class="error">
+				<s:property value="#session.errorMsg" />
 			</div>
-			<s:fielderror><s:param>user.psd</s:param></s:fielderror>
+			<div>
+				<label class="ms-Label">修改学生信息&nbsp;ID: <%=stu.getStuId()%></label>
+			</div>
+            <input type="hidden" name="student.stuId" value="<%=stu.getStuId()%>"></input>
 			<div class="ms-TextField" onload="TextField()">
-				<label class="ms-Label">密码</label> <input class="ms-TextField-field"
-					type="password" value="" placeholder="" name="user.psd">
+				<label class="ms-Label">姓名*</label> <input
+					class="ms-TextField-field" type="text"
+					value="<%=stu.getStuName()%>" placeholder="" name="student.stuName">
 			</div>
 			<div class="ms-Dropdown" tabindex="0">
 				<label class="ms-Label">性别</label> <i
 					class="ms-Dropdown-caretDown ms-Icon ms-Icon--ChevronDown"></i> <select
-					class="ms-Dropdown-select" name="user.gender">
-					<option value="male">男</option>
-					<option value="female">女</option>
+					class="ms-Dropdown-select" name="student.stuGender">
+					<option value="male"
+						<%if (stu.getStuGender().equals("male")) {
+					out.print("selected=\"selected\"");}%>>男</option>
+					<option value="female"
+						<%if (stu.getStuGender().equals("female")) {
+					out.print("selected=\"selected\"");}%>>女</option>
+					<option value="other"
+						<%if (stu.getStuGender().equals("other"))
+					out.print("selected=\"selected\"");%>>其他</option>
 				</select>
 			</div>
 			<div class="ms-TextField" onload="TextField()">
-				<label class="ms-Label">邮箱</label> <input class="ms-TextField-field"
-					type="email" value="" placeholder="" name="user.email">
+				<label class="ms-Label">学号*</label> <input
+					class="ms-TextField-field" type="text" value="<%=stu.getStuNo()%>"
+					placeholder="" name="student.stuNo">
+			</div>
+			<div class="ms-TextField" onload="TextField()">
+				<label class="ms-Label">院系</label> <input class="ms-TextField-field"
+					type="text" value="<%=stu.getDpart()%>" placeholder=""
+					name="student.dpart">
+			</div>
+			<div class="ms-TextField" onload="TextField()">
+				<label class="ms-Label">班级</label> <input class="ms-TextField-field"
+					type="text" value="<%=stu.getStuClass()%>" placeholder=""
+					name="student.stuClass">
 			</div>
 			<div class="ms-DatePicker">
 				<div class="ms-TextField">
-					<label class="ms-Label">生日</label> <i
+					<label class="ms-Label">入学日期</label> <i
 						class="ms-DatePicker-event ms-Icon ms-Icon--Event"></i> <input
 						class="ms-TextField-field" type="text" placeholder="选择日期&hellip;"
-						name="user.birthDate">
+						name="student.admissionDate" value="<%=stu.getAdmissionDate()%>">
 				</div>
 				<div class="ms-DatePicker-monthComponents">
 					<span class="ms-DatePicker-nextMonth js-nextMonth"><i
@@ -90,12 +115,15 @@
 					</div>
 				</div>
 			</div>
-
+			<div class="ms-TextField" onload="TextField()">
+				<label class="ms-Label">GPA</label> <input
+					class="ms-TextField-field" type="text" value="<%=stu.getGpa()%>"
+					placeholder="" name="student.gpa">
+			</div>
 			<input class="ms-Button ms-Button--primary" type="submit" value="确认"
 				name="submit">
 			<input class="ms-Button" type="reset" value="重新填写" name="reset">
 		</s:form>
 	</div>
-
 </body>
 </html>

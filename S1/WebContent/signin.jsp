@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<head>
 <%-- 导入站点全局首部--%>
 <%@ include file="/site-head.jsp"%>
 </head>
