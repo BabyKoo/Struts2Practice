@@ -93,12 +93,9 @@ public class QueryStudents {
 	}
 	public String delete(){
 		System.out.println("QS");
-		int i=sd.insertStudent(student);
-		if(i!=-1) {
-			student.setStuId(i);
-			list.add(student);
-			session.put("Result", list);
-			System.out.println("Inserted "+list.get(0).getStuName());
+		boolean consq=sd.deleteStudentById(student.getStuId());
+		if(consq) {
+			System.out.println("Deleted "+student.getStuId());
 			return "querySuccess";
 		}else {
 			session.put("errorMsg", "Query fail. ");
