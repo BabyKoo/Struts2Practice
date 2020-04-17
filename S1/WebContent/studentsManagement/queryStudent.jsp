@@ -40,7 +40,7 @@
 			<div class="ms-TextField" onload="TextField()">
 				<label class="ms-Label">学生院系</label> <input
 					class="ms-TextField-field" type="text" value="" placeholder=""
-					name="student.stuDpart">
+					name="student.dpart">
 			</div>
 			<input class="ms-Button ms-Button--primary" type="submit" value="确认"
 				name="submit">
@@ -68,7 +68,7 @@
 	</div>
 	<%
 		;
-		} else
+		} else{
 	%>
 	<div class="ms-Dialo" id="main-block">
 		<div class="error">
@@ -76,7 +76,7 @@
 		</div>
 	</div>
 	<%
-		;
+		;}
 	%>
 </body>
 </html>

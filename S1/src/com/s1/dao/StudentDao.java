@@ -22,7 +22,7 @@ public class StudentDao {
 		ResultSet res = null;
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from students";
+			String strSql = "select * from student";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql);
 			res = pStatement.executeQuery();
@@ -48,7 +48,7 @@ public class StudentDao {
 		ResultSet res = null;
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from students where stuName = ?";
+			String strSql = "select * from student where stu_name = ?";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql);
 			pStatement.setString(1, name);
@@ -75,7 +75,7 @@ public class StudentDao {
 		ResultSet res = null;
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from students where stuId = ?";
+			String strSql = "select * from student where stu_id = ?";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql);
 			pStatement.setInt(1, id);
@@ -102,7 +102,7 @@ public class StudentDao {
 		ResultSet res = null;
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from students where stuNo = ?";
+			String strSql = "select * from student where stu_no = ?";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql);
 			pStatement.setString(1, No);
@@ -129,7 +129,7 @@ public class StudentDao {
 		ResultSet res = null;
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from students where dpart = ?";
+			String strSql = "select * from student where dpart = ?";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql);
 			pStatement.setString(1, dpart);
@@ -152,15 +152,15 @@ public class StudentDao {
 		ArrayList<Student> list = new ArrayList<Student>();
 		while (res.next()) {
 			Student student = new Student();
-			student.setStuId(res.getInt("stuId"));
-			student.setStuName(res.getString("stuName"));
-			student.setStuNo(res.getString("stuNo"));
-			student.setStuGender(res.getString("stuGender"));
+			student.setStuId(res.getInt("stu_id"));
+			student.setStuName(res.getString("stu_name"));
+			student.setStuNo(res.getString("stu_no"));
+			student.setStuGender(res.getString("stu_gender"));
 			student.setDpart(res.getString("dpart"));
 			student.setStuClass(res.getString("class"));
-			student.setAdmissionDate(res.getString("admissionDate"));
-			student.setGpa(res.getFloat("GPA"));
-			System.out.println("Encap " + res.getString("stuName"));
+			student.setAdmissionDate(res.getString("admission_date"));
+			student.setGpa(res.getFloat("gpa"));
+			System.out.println("Encap " + res.getString("stu_name"));
 			list.add(student);
 		}
 		return list;
@@ -178,7 +178,7 @@ public class StudentDao {
 //		Student student=this.getStudentsById(id);
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "update students set stuName=?, stuNo=?, stuGender=?, dpart=?, class=?, admissionDate=?, GPA=? where stuId = ?";
+			String strSql = "update student set stu_name=?, stu_no=?, stu_gender=?, dpart=?, class=?, admission_date=?, gpa=? where stu_id = ?";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql);
 			pStatement.setString(1, student.getStuName());
@@ -217,7 +217,7 @@ public class StudentDao {
 //		Student student=this.getStudentsById(id);
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "insert into students (stuName, stuNo, stuGender, dpart, class, admissionDate, GPA)values(?, ?, ?, ?, ?, ?, ?)";
+			String strSql = "insert into student (stu_name, stu_no, stu_gender, dpart, class, admission_date, gpa)values(?, ?, ?, ?, ?, ?, ?)";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 			pStatement.setString(1, student.getStuName());
@@ -260,7 +260,7 @@ public class StudentDao {
 		int i = -1;
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "delete from students where stuId = ?";
+			String strSql = "delete from student where stu_id = ?";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql);
 			pStatement.setInt(1, id);

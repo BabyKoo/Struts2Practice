@@ -22,7 +22,7 @@ public class UserDao {
 
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from users where name = ? and psd = ?";
+			String strSql = "select * from user where name = ? and psd = ?";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql);
 			System.out.println("gUbp: name: " + name);
@@ -74,7 +74,7 @@ public class UserDao {
 		ResultSet res = null;
 		try {
 			dbConnection = ConnectionManager.getConnection();
-			String strSql = "insert into users (name, psd, email, birthDate, gender) values (?, ?, ?,  str_to_date(?, '%Y-%m-%d'), ?)";
+			String strSql = "insert into user (name, psd, email, birthDate, gender) values (?, ?, ?,  str_to_date(?, '%Y-%m-%d'), ?)";
 			System.out.println(strSql);
 			pStatement = dbConnection.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
 			pStatement.setString(1, user.getName());

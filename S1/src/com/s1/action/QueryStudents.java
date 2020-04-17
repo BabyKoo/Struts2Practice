@@ -23,7 +23,7 @@ public class QueryStudents {
 	public String all(){
 		System.out.println("QS");
 		list=sd.getAllStudents();
-		if(list!=null&&list.size()>0) {
+		if(list!=null) {
 			session.put("Result", list);
 			return "querySuccess";
 		}else {
@@ -34,7 +34,7 @@ public class QueryStudents {
 	public String byName(){
 		System.out.println("QS");
 		list=sd.getStudentsByName(student.getStuName());
-		if(list!=null&&list.size()>0) {
+		if(list!=null) {
 			session.put("Result", list);
 			return "querySuccess";
 		}else {
@@ -45,7 +45,7 @@ public class QueryStudents {
 	public String byDpart(){
 		System.out.println("QS");
 		list=sd.getStudentsByDpart(student.getDpart());
-		if(list!=null&&list.size()>0) {
+		if(list!=null) {
 			session.put("Result", list);
 			return "querySuccess";
 		}else {
@@ -56,7 +56,7 @@ public class QueryStudents {
 	public String byNo(){
 		System.out.println("QS");
 		list=sd.getStudentsByNo(student.getStuNo());
-		if(list!=null&&list.size()>0) {
+		if(list!=null) {
 			session.put("Result", list);
 			return "querySuccess";
 		}else {
