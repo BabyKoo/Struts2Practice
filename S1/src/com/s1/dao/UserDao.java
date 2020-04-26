@@ -1,50 +1,53 @@
 package com.s1.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
+import org.hibernate.query.Query;
+//import java.sql.Statement;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import com.s1.common.HibernateSessionFactory;
 import com.s1.entity.User;
 
 public class UserDao {
+	Session session = null;
+	Transaction transaction = null;
+
 	/**
 	 * 根据用户密码
 	 * 
-	 * @return List
+	 * @return User
 	 */
 	public User getUserByPassword(String name, String password) {
-		Connection dbConnection = null;
-		PreparedStatement pStatement = null;
-		ResultSet res = null;
 		User user = new User();
-
 		try {
-			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from user where name = ? and psd = ?";
-			System.out.println(strSql);
-			pStatement = dbConnection.prepareStatement(strSql);
-			System.out.println("gUbp: name: " + name);
-			pStatement.setString(1, name);
-			pStatement.setString(2, password);
-			res = pStatement.executeQuery();
-			// 把各属性封装到一个user对象中
-			user = encapUser(res);
-			if (user != null)
-				System.out.println("resUn: " + user.getName());
+			session = HibernateSessionFactory.getSession();
+			Query<?> q=session.createQuery("select u from User u where name=:uname and psd=:upsd");
+			q.setParameter("uname", name);
+			q.setParameter("upsd", password);
+			List<?> users=q.list();
+			if(users.isEmpty()) return null;
+			user = (User) users.get(0);
+			System.out.println("ud "+user.getName());
 			return user;
-		} catch (SQLException sqlE) {
-			sqlE.printStackTrace();
+		}catch(Exception ex) {
+			ex.printStackTrace();
 			return null;
-		} finally {
-			ConnectionManager.closeResultSet(res);
-			ConnectionManager.closeStatement(pStatement);
-			ConnectionManager.closeConnection(dbConnection);
+		}finally {
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
-	// 把各属性封装到一个user对象中
+	/**
+	 * 把各属性封装到一个user对象中
+	 * 
+	 * @param ResultSet res
+	 * @return User
+	 * @throws SQLException
+	 */
 	public User encapUser(ResultSet res) throws SQLException {
 		User user = new User();
 		if (res.next()) {
@@ -54,48 +57,35 @@ public class UserDao {
 			String uName = res.getString("name");
 			String uPassword = res.getString("psd");
 			String uEmail = res.getString("email");
-			String birthDate = res.getString("birthDate");
+			String birth_date = res.getString("birth_date");
 			String gender = res.getString("gender");
 			user.setId(id);
 			user.setName(uName);
 			user.setPsd(uPassword);
 			user.setEmail(uEmail);
-			user.setBirthDate(birthDate);
+			user.setBirthDate(birth_date);
 			user.setGender(gender);
 			return user;
 		} else {
 			return null;
 		}
 	}
-	
-	public User insertUser(User user) {
-		Connection dbConnection = null;
-		PreparedStatement pStatement = null;
-		ResultSet res = null;
+
+	public int insertUser(User user) {
+//			String strSql = "insert into user (name, psd, email, birth_date, gender) values (?, ?, ?,  str_to_date(?, '%Y-%m-%d'), ?)";
+		int num = 0;
 		try {
-			dbConnection = ConnectionManager.getConnection();
-			String strSql = "insert into user (name, psd, email, birthDate, gender) values (?, ?, ?,  str_to_date(?, '%Y-%m-%d'), ?)";
-			System.out.println(strSql);
-			pStatement = dbConnection.prepareStatement(strSql, Statement.RETURN_GENERATED_KEYS);
-			pStatement.setString(1, user.getName());
-			pStatement.setString(2, user.getPsd());
-			pStatement.setString(3, user.getEmail());
-			pStatement.setString(4, user.getBirthDate());
-			pStatement.setString(5, user.getGender());
-			pStatement.executeUpdate();
-			res = pStatement.getGeneratedKeys();
-			int userId = 0;
-			if (res.next()) {
-				userId = res.getInt(1);
-				user.setId(userId);
-			}
-			return user;
-		} catch (SQLException sqlE) {
-			sqlE.printStackTrace();
-			return null;
+			session = HibernateSessionFactory.getSession();
+			transaction = session.beginTransaction();
+			num = Integer.parseInt(session.save(user).toString());
+			transaction.commit();
+		} catch (Exception e) {
+			num = -1;
+			e.printStackTrace();
 		} finally {
-			ConnectionManager.closeStatement(pStatement);
-			ConnectionManager.closeConnection(dbConnection);
+			System.out.println("UDI " + num);
+			HibernateSessionFactory.closeSession();
 		}
+		return num;
 	}
 }

@@ -7,6 +7,9 @@ public class User {
 	private String gender;
 	private String email;
 	private String birthDate;
+//	private String mysql_str_to_date(String str) {
+//		return "str_to_date("+str+", '%Y-%m-%d')";
+//	}
 	public String getName() {
 		return name;
 	}
@@ -32,9 +35,11 @@ public class User {
 		this.email = email;
 	}
 	public String getBirthDate() {
+		if(birthDate==null||birthDate.isBlank()) birthDate="0000-00-00";
 		return birthDate;
 	}
 	public void setBirthDate(String birthDate) {
+//		if(birthDate==null||birthDate.isBlank()) birthDate="0000-00-00";
 		this.birthDate = birthDate;
 	}
 	public int getId() {

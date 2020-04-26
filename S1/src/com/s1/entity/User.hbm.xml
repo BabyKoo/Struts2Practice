@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2020??4??19?? ????6:25:51 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+ <class name="com.s1.entity.User" table="user">
+  <id column="user_id" name="id" type="int">
+<!--    <column name="user_id" not-null="true" sql-type="INTEGER" unique="true"/> -->
+   <generator class="native"/>
+  </id>
+  <property generated="never" lazy="false" name="name" type="java.lang.String">
+   <column name="name"/>
+  </property>
+  <property generated="never" lazy="false" name="psd" type="java.lang.String">
+   <column name="psd"/>
+  </property>
+  <property generated="never" lazy="false" name="gender" type="java.lang.String">
+   <column name="gender"/>
+  </property>
+  <property generated="never" lazy="false" name="email" type="java.lang.String">
+   <column name="email"/>
+  </property>
+  <property generated="never" lazy="false"
+   name="birthDate" type="java.lang.String">
+   <column name="birth_date" />
+  </property>
+ </class>
+</hibernate-mapping>

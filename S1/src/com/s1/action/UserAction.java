@@ -22,11 +22,12 @@ public class UserAction {
 	Map<String, Object> session = context.getSession();
 
 	public String signup() {
-		user = ud.insertUser(user);
+		int num = ud.insertUser(user);
+//		user.setName("Test");
 		if (user.getName().isEmpty() || user.getPsd().isEmpty()) {
 			session.put("errorMsg", "User name and password could not be empty.");
 			return "input";
-		} else if (user == null) {
+		} else if (num<=0) {
 			session.put("errorMsg", "Unkonwn error occur. ");
 			return "input";
 		} else {
