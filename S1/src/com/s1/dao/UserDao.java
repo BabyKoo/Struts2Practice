@@ -17,7 +17,7 @@ public class UserDao {
 	Transaction transaction = null;
 
 	/**
-	 * 根据用户密码
+	 * 根据用户名和密码
 	 * 
 	 * @return User
 	 */

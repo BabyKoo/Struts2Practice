@@ -8,32 +8,33 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import com.s1.common.HibernateSessionFactory;
 import com.s1.entity.Student;
 
 public class StudentDao {
+	Session session = null;
+	Transaction transaction = null;
 	/*
 	 * 返回所有学生
 	 * 
 	 * @return List
 	 */
 	public List<Student> getAllStudents() {
-		Connection dbConnection = null;
-		PreparedStatement pStatement = null;
-		ResultSet res = null;
 		try {
-			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from student";
-			System.out.println(strSql);
-			pStatement = dbConnection.prepareStatement(strSql);
-			res = pStatement.executeQuery();
-			return encapStudents(res);
-		} catch (SQLException sqlX) {
-			sqlX.printStackTrace();
+			session = HibernateSessionFactory.getSession();
+			Query<Student> q=session.createQuery("select s from Student s");
+			List<Student> students=q.list();
+			if(students.isEmpty()) return null;
+			return students;
+		} catch (Exception x) {
+			x.printStackTrace();
 			return null;
 		} finally {
-			ConnectionManager.closeResultSet(res);
-			ConnectionManager.closeStatement(pStatement);
-			ConnectionManager.closeConnection(dbConnection);
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -43,24 +44,18 @@ public class StudentDao {
 	 * @return List
 	 */
 	public List<Student> getStudentsByName(String name) {
-		Connection dbConnection = null;
-		PreparedStatement pStatement = null;
-		ResultSet res = null;
 		try {
-			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from student where stu_name = ?";
-			System.out.println(strSql);
-			pStatement = dbConnection.prepareStatement(strSql);
-			pStatement.setString(1, name);
-			res = pStatement.executeQuery();
-			return encapStudents(res);
-		} catch (SQLException sqlX) {
-			sqlX.printStackTrace();
+			session = HibernateSessionFactory.getSession();
+			Query<Student> q=session.createQuery("select s from Student s where stuName=:sName");
+			q.setParameter("sName", name);
+			List<Student> students=q.list();
+			if(students.isEmpty()) return null;
+			return students;
+		} catch (Exception x) {
+			x.printStackTrace();
 			return null;
 		} finally {
-			ConnectionManager.closeResultSet(res);
-			ConnectionManager.closeStatement(pStatement);
-			ConnectionManager.closeConnection(dbConnection);
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -70,24 +65,18 @@ public class StudentDao {
 	 * @return Student
 	 */
 	public Student getStudentById(int id) {
-		Connection dbConnection = null;
-		PreparedStatement pStatement = null;
-		ResultSet res = null;
 		try {
-			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from student where stu_id = ?";
-			System.out.println(strSql);
-			pStatement = dbConnection.prepareStatement(strSql);
-			pStatement.setInt(1, id);
-			res = pStatement.executeQuery();
-			return encapStudents(res).get(0);
-		} catch (SQLException sqlX) {
-			sqlX.printStackTrace();
+			session = HibernateSessionFactory.getSession();
+			Query<Student> q=session.createQuery("select s from Student s where stuId=:sId");
+			q.setParameter("sId", id);
+			List<Student> students=q.list();
+			if(students.isEmpty()) return null;
+			return students.get(0);
+		} catch (Exception x) {
+			x.printStackTrace();
 			return null;
 		} finally {
-			ConnectionManager.closeResultSet(res);
-			ConnectionManager.closeStatement(pStatement);
-			ConnectionManager.closeConnection(dbConnection);
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -97,24 +86,18 @@ public class StudentDao {
 	 * @return List
 	 */
 	public List<Student> getStudentsByNo(String No) {
-		Connection dbConnection = null;
-		PreparedStatement pStatement = null;
-		ResultSet res = null;
 		try {
-			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from student where stu_no = ?";
-			System.out.println(strSql);
-			pStatement = dbConnection.prepareStatement(strSql);
-			pStatement.setString(1, No);
-			res = pStatement.executeQuery();
-			return encapStudents(res);
-		} catch (SQLException sqlX) {
-			sqlX.printStackTrace();
+			session = HibernateSessionFactory.getSession();
+			Query<Student> q=session.createQuery("select s from Student s where stuNo=:sNo");
+			q.setParameter("sNo", No);
+			List<Student> students=q.list();
+			if(students.isEmpty()) return null;
+			return students;
+		} catch (Exception x) {
+			x.printStackTrace();
 			return null;
 		} finally {
-			ConnectionManager.closeResultSet(res);
-			ConnectionManager.closeStatement(pStatement);
-			ConnectionManager.closeConnection(dbConnection);
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -124,24 +107,18 @@ public class StudentDao {
 	 * @return List
 	 */
 	public List<Student> getStudentsByDpart(String dpart) {
-		Connection dbConnection = null;
-		PreparedStatement pStatement = null;
-		ResultSet res = null;
 		try {
-			dbConnection = ConnectionManager.getConnection();
-			String strSql = "select * from student where dpart = ?";
-			System.out.println(strSql);
-			pStatement = dbConnection.prepareStatement(strSql);
-			pStatement.setString(1, dpart);
-			res = pStatement.executeQuery();
-			return encapStudents(res);
-		} catch (SQLException sqlX) {
-			sqlX.printStackTrace();
+			session = HibernateSessionFactory.getSession();
+			Query<Student> q=session.createQuery("select s from Student s where dpart=:dpart");
+			q.setParameter("dpart", dpart);
+			List<Student> students=q.list();
+			if(students.isEmpty()) return null;
+			return students;
+		} catch (Exception x) {
+			x.printStackTrace();
 			return null;
 		} finally {
-			ConnectionManager.closeResultSet(res);
-			ConnectionManager.closeStatement(pStatement);
-			ConnectionManager.closeConnection(dbConnection);
+			HibernateSessionFactory.closeSession();
 		}
 	}
 
@@ -172,35 +149,51 @@ public class StudentDao {
 	 * @return boolean
 	 */
 	public boolean updateStudent(Student student) {
-		Connection dbConnection = null;
-		PreparedStatement pStatement = null;
-		ResultSet res = null;
-//		Student student=this.getStudentsById(id);
+//		Connection dbConnection = null;
+//		PreparedStatement pStatement = null;
+//		ResultSet res = null;
+////		Student student=this.getStudentsById(id);
+//		try {
+//			dbConnection = ConnectionManager.getConnection();
+//			String strSql = "update student set stu_name=?, stu_no=?, stu_gender=?, dpart=?, class=?, admission_date=?, gpa=? where stu_id = ?";
+//			System.out.println(strSql);
+//			pStatement = dbConnection.prepareStatement(strSql);
+//			pStatement.setString(1, student.getStuName());
+//			pStatement.setString(2, student.getStuNo());
+//			pStatement.setString(3, student.getStuGender());
+//			pStatement.setString(4, student.getDpart());
+//			pStatement.setString(5, student.getStuClass());
+//			if (!student.getAdmissionDate().isBlank())
+//				pStatement.setString(6, student.getAdmissionDate());
+//			else
+//				pStatement.setString(6, null);
+//			pStatement.setFloat(7, student.getGpa());
+//			pStatement.setInt(8, student.getStuId());
+//			pStatement.executeUpdate();
+//			return true;
+//		} catch (SQLException sqlX) {
+//			sqlX.printStackTrace();
+//			return false;
+//		} finally {
+//			ConnectionManager.closeResultSet(res);
+//			ConnectionManager.closeStatement(pStatement);
+//			ConnectionManager.closeConnection(dbConnection);
+//		}
+		int num = 0;
 		try {
-			dbConnection = ConnectionManager.getConnection();
-			String strSql = "update student set stu_name=?, stu_no=?, stu_gender=?, dpart=?, class=?, admission_date=?, gpa=? where stu_id = ?";
-			System.out.println(strSql);
-			pStatement = dbConnection.prepareStatement(strSql);
-			pStatement.setString(1, student.getStuName());
-			pStatement.setString(2, student.getStuNo());
-			pStatement.setString(3, student.getStuGender());
-			pStatement.setString(4, student.getDpart());
-			pStatement.setString(5, student.getStuClass());
-			if (!student.getAdmissionDate().isBlank())
-				pStatement.setString(6, student.getAdmissionDate());
-			else
-				pStatement.setString(6, null);
-			pStatement.setFloat(7, student.getGpa());
-			pStatement.setInt(8, student.getStuId());
-			pStatement.executeUpdate();
+			session = HibernateSessionFactory.getSession();
+			transaction = session.beginTransaction();
+//			num = Integer.parseInt(.toString());
+			session.update(student);
+			transaction.commit();
 			return true;
-		} catch (SQLException sqlX) {
-			sqlX.printStackTrace();
+		} catch (Exception e) {
+			num = -1;
+			e.printStackTrace();
 			return false;
 		} finally {
-			ConnectionManager.closeResultSet(res);
-			ConnectionManager.closeStatement(pStatement);
-			ConnectionManager.closeConnection(dbConnection);
+			System.out.println("UDI " + num);
+			HibernateSessionFactory.closeSession();
 		}
 	}
 

@@ -8,7 +8,7 @@ public class Student {
 	String dpart;
 	String stuClass;
 	String admissionDate;
-	float gpa;
+	float gpa=(float)0.0;
 	public int getStuId() {
 		return stuId;
 	}
@@ -55,7 +55,8 @@ public class Student {
 	public float getGpa() {
 		return gpa;
 	}
-	public void setGpa(float gpa) {
-		this.gpa = gpa;
+	public void setGpa(Float gpa) {
+		if(gpa==null) this.gpa=(float)0;
+		else this.gpa = gpa;
 	}
 }
