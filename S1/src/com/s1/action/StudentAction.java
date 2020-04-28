@@ -8,7 +8,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.s1.dao.StudentDao;
 import com.s1.entity.Student;
 
-public class QueryStudents {
+public class StudentAction {
 	ActionContext context = ActionContext.getContext();
 	Map<String, Object> session = context.getSession();
 	Student student=new Student();

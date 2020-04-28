@@ -3,31 +3,31 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2020??4??19?? ????6:25:51 by Hibernate Tools 3.5.0.Final -->
 <hibernate-mapping>
-    <class name="com.s1.entity.Student" table="t_student">
-        <id name="stuId" type="int">
-            <column name="STU_ID" />
-            <generator class="assigned" />
-        </id>
-        <property name="stuNo" type="java.lang.String">
-            <column name="STU_NO" />
-        </property>
-        <property name="stuName" type="java.lang.String">
-            <column name="STU_NAME" />
-        </property>
-        <property name="stuGender" type="java.lang.String">
-            <column name="STU_GENDER" />
-        </property>
-        <property name="dpart" type="java.lang.String">
-            <column name="DPART" />
-        </property>
-        <property name="stuClass" type="java.lang.String">
-            <column name="CLASS" />
-        </property>
-        <property name="admissionDate" type="java.lang.String">
-            <column name="ADMISSION_DATE" />
-        </property>
-        <property name="gpa" type="float">
-            <column name="GPA" />
-        </property>
-    </class>
+	<class name="com.s1.entity.Student" table="t_student">
+		<id name="stuId" type="int">
+			<column name="STU_ID" />
+			<generator class="native" />
+		</id>
+		<property name="stuNo" type="java.lang.String">
+			<column name="STU_NO" />
+		</property>
+		<property name="stuName" type="java.lang.String">
+			<column name="STU_NAME" />
+		</property>
+		<property name="stuGender" type="java.lang.String">
+			<column name="STU_GENDER" />
+		</property>
+		<property name="dpart" type="java.lang.String">
+			<column name="DPART" />
+		</property>
+		<property name="stuClass" type="java.lang.String">
+			<column name="CLASS" />
+		</property>
+		<property name="admissionDate" type="java.lang.String">
+			<column name="ADMISSION_DATE" />
+		</property>
+		<property name="gpa" type="float">
+			<column name="GPA" />
+		</property>
+	</class>
 </hibernate-mapping>

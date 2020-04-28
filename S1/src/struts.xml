@@ -51,7 +51,7 @@
 			</interceptor-stack>
 		</interceptors>
 		<default-interceptor-ref name="default-stack"></default-interceptor-ref>
-		<action name="query_*" class="com.s1.action.QueryStudents"
+		<action name="query_*" class="com.s1.action.StudentAction"
 			method="{1}">
 			<result type="redirect" name="querySuccess">
 				<param name="location">./queryResult.jsp</param>
