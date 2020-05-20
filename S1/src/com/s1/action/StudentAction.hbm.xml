@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2020??5??8?? ????11:09:48 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="com.s1.action.StudentAction" table="STUDENTACTION">
+        <id name="context" type="com.opensymphony.xwork2.ActionContext" access="field">
+            <column name="CONTEXT" />
+            <generator class="assigned" />
+        </id>
+        <map name="session" table="STUDENTACTION" lazy="true" access="field">
+            <key>
+                <column name="CONTEXT" />
+            </key>
+            <map-key type="java.lang.String"></map-key>
+            <element type="java.lang.String">
+                <column name="SESSION" />
+            </element>
+        </map>
+        <many-to-one name="student" class="com.s1.entity.StudentInfo" fetch="join">
+            <column name="STUDENT" />
+        </many-to-one>
+        <many-to-one name="sd" class="com.s1.dao.StudentDao" access="field" fetch="join">
+            <column name="SD" />
+        </many-to-one>
+        <list name="list" inverse="false" table="STUDENTINFO" lazy="true" access="field">
+            <key>
+                <column name="CONTEXT" />
+            </key>
+            <list-index></list-index>
+            <one-to-many class="com.s1.entity.StudentInfo" />
+        </list>
+    </class>
+</hibernate-mapping>
