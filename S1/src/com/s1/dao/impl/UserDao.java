@@ -1,30 +1,31 @@
-package com.s1.dao;
+package com.s1.dao.impl;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 //import java.sql.Statement;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.s1.common.HibernateSessionFactory;
+import com.s1.dao.IUserDao;
 import com.s1.entity.User;
 
-public class UserDao {
+@Repository
+public class UserDao implements IUserDao{
 	Session session = null;
 	Transaction transaction = null;
+	@Autowired
+	SessionFactory sessionFactory;
 
-	/**
-	 * 根据用户名和密码
-	 * 
-	 * @return User
-	 */
+	@Override
 	public User getUserByPassword(String name, String password) {
 		User user = new User();
 		try {
-			session = HibernateSessionFactory.getSession();
+			session = sessionFactory.openSession();
 			Query<?> q=session.createQuery("select u from User u where name=:uname and psd=:upsd");
 			q.setParameter("uname", name);
 			q.setParameter("upsd", password);
@@ -37,45 +38,16 @@ public class UserDao {
 			ex.printStackTrace();
 			return null;
 		}finally {
-			HibernateSessionFactory.closeSession();
+			sessionFactory.close();
 		}
 	}
 
-	/**
-	 * 把各属性封装到一个user对象中
-	 * 
-	 * @param ResultSet res
-	 * @return User
-	 * @throws SQLException
-	 */
-	public User encapUser(ResultSet res) throws SQLException {
-		User user = new User();
-		if (res.next()) {
-			int uId = res.getInt("user_id");
-			System.out.println("uId: " + uId);
-			int id = res.getInt("user_id");
-			String uName = res.getString("name");
-			String uPassword = res.getString("psd");
-			String uEmail = res.getString("email");
-			String birth_date = res.getString("birth_date");
-			String gender = res.getString("gender");
-			user.setId(id);
-			user.setName(uName);
-			user.setPsd(uPassword);
-			user.setEmail(uEmail);
-			user.setBirthDate(birth_date);
-			user.setGender(gender);
-			return user;
-		} else {
-			return null;
-		}
-	}
-
+	@Override
 	public int insertUser(User user) {
 //			String strSql = "insert into user (name, psd, email, birth_date, gender) values (?, ?, ?,  str_to_date(?, '%Y-%m-%d'), ?)";
 		int num = 0;
 		try {
-			session = HibernateSessionFactory.getSession();
+			session = sessionFactory.openSession();
 			transaction = session.beginTransaction();
 			num = Integer.parseInt(session.save(user).toString());
 			transaction.commit();
@@ -84,7 +56,7 @@ public class UserDao {
 			e.printStackTrace();
 		} finally {
 			System.out.println("UDI " + num);
-			HibernateSessionFactory.closeSession();
+			sessionFactory.close();
 		}
 		return num;
 	}

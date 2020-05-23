@@ -3,6 +3,8 @@
 "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
 "http://struts.apache.org/dtds/struts-2.5.dtd">
 <struts>
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.objectFactory.spring.autoWire" value="name"/>
 	<package name="default" namespace="/" extends="struts-default">
 		<interceptors>
 			<interceptor name="loginItp"

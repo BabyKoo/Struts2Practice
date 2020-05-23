@@ -1,4 +1,4 @@
-<%@page import="com.s1.dao.*"%>
+<%@page import="com.s1.dao.impl.*"%>
 <%@page import="com.s1.entity.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info="删除"%>

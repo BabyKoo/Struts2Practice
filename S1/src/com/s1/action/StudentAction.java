@@ -4,15 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.opensymphony.xwork2.ActionContext;
-import com.s1.dao.StudentDao;
+import com.s1.dao.impl.StudentDao;
 import com.s1.entity.Student;
+import com.s1.service.impl.StudentService;
+import com.s1.service.impl.UserService;
 
 public class StudentAction {
 	ActionContext context = ActionContext.getContext();
 	Map<String, Object> session = context.getSession();
 	Student student=new Student();
-	StudentDao sd=new StudentDao();
+	ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+	StudentService studentService = (StudentService) ctx.getBean("studentService");
 	List<Student> list = new ArrayList<Student>();
 	public Student getStudent() {
 		return student;
@@ -22,7 +28,7 @@ public class StudentAction {
 	}
 	public String all(){
 		System.out.println("QS");
-		list=sd.getAllStudents();
+		list=studentService.listStudents();
 		if(list!=null) {
 			session.put("Result", list);
 			return "querySuccess";
@@ -33,7 +39,7 @@ public class StudentAction {
 	}
 	public String byName(){
 		System.out.println("QS");
-		list=sd.getStudentsByName(student.getStuName());
+		list=studentService.getStudentsBy("stuName", student.getStuName());
 		if(list!=null) {
 			session.put("Result", list);
 			return "querySuccess";
@@ -44,7 +50,7 @@ public class StudentAction {
 	}
 	public String byDpart(){
 		System.out.println("QS");
-		list=sd.getStudentsByDpart(student.getDpart());
+		list=studentService.getStudentsBy("dpart", student.getDpart());
 		if(list!=null) {
 			session.put("Result", list);
 			return "querySuccess";
@@ -55,7 +61,7 @@ public class StudentAction {
 	}
 	public String byNo(){
 		System.out.println("QS");
-		list=sd.getStudentsByNo(student.getStuNo());
+		list=studentService.getStudentsBy("stuNo", student.getStuNo());
 		if(list!=null) {
 			session.put("Result", list);
 			return "querySuccess";
@@ -66,7 +72,7 @@ public class StudentAction {
 	}
 	public String insert(){
 		System.out.println("QS");
-		int i=sd.insertStudent(student);
+		int i=studentService.insertStudent(student);
 		if(i!=-1) {
 			student.setStuId(i);
 			list.add(student);
@@ -81,7 +87,7 @@ public class StudentAction {
 	public String update(){
 		System.out.println("QS");
 		System.out.println(student.getStuId());
-		if(sd.updateStudent(student)) {
+		if(studentService.updateStudent(student)) {
 			list.add(student);
 			session.put("Result", list);
 			System.out.println("Updated "+list.get(0).getStuId());
@@ -93,7 +99,7 @@ public class StudentAction {
 	}
 	public String delete(){
 		System.out.println("QS");
-		boolean consq=sd.deleteStudentById(student.getStuId());
+		boolean consq=studentService.deleteStudentById(student.getStuId());
 		if(consq) {
 			System.out.println("Deleted "+student.getStuId());
 			return "querySuccess";

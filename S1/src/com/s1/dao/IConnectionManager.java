@@ -6,15 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ConnectionManager {
-	private static final String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
-	private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/Struts2Test?useSSL=false&serverTimezone=CST";
-	private static final String DATABASE_USRE = "Victor";
-	private static final String DATABASE_PASSWORD = "yu1002";
+/**
+* @author 古学懂_Victor
+* @date 2020年5月20日
+*/
+public interface IConnectionManager {
+	String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
+	String DATABASE_URL = "";
+	String DATABASE_USRE = "";
+	String DATABASE_PASSWORD = "";
 	/**
 	 * 返回连接 
 	 */
-	public static Connection getConnection() {
+	public static Connection getConnection(){
 		Connection dbConnection = null;
 		try {
 			Class.forName(DRIVER_CLASS);
@@ -28,7 +32,7 @@ public class ConnectionManager {
 	/**
 	 * 关闭连接
 	 */
-	public static void closeConnection(Connection dbConnection) {
+	public static void closeConnection(Connection dbConnection){
 		try {
 			if (dbConnection != null && (!dbConnection.isClosed())) {
 				dbConnection.close();
@@ -40,7 +44,7 @@ public class ConnectionManager {
 	/**
 	 * 关闭结果集
 	 */
-	public static void closeResultSet(ResultSet res) {
+	public static void closeResultSet(ResultSet res){
 		try {
 			if (res != null) {
 				res.close();
@@ -53,7 +57,7 @@ public class ConnectionManager {
 	/**
 	 *关闭语句
 	 */
-	public static void closeStatement(PreparedStatement pStatement) {
+	public static void closeStatement(PreparedStatement pStatement){
 		try {
 			if (pStatement != null) {
 				pStatement.close();
